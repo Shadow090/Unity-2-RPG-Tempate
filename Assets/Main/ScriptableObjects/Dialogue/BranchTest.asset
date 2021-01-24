@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79f33e873db824e978c07394033c9f57, type: 3}
+  m_Name: BranchTest
+  m_EditorClassIdentifier: 
+  dialogueID: Root
+  DialogueLines:
+  - This is a Test
+  - for dialogue
+  - ' Do you like ?'
+  ResponseOption:
+  - text: Yes
+    nextBranch: {fileID: 11400000, guid: 2fdf26c3f79094649acc8691b128559b, type: 2}
+  - text: No
+    nextBranch: {fileID: 11400000, guid: 3bbf2b848cb884acab58cc2862efa904, type: 2}
+  - text: Maybe
+    nextBranch: {fileID: 11400000, guid: 4eec35b24d94e43fba157f45c5825394, type: 2}

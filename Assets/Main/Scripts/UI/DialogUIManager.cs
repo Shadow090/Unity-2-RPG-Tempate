@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +11,8 @@ public class DialogUIManager : MonoBehaviour
     public GameObject responseTab;
     public GameObject continueText;
     public List<Button> responsesHolder;
+
+    private DialogueBranch branch;
 
     [SerializeField]
     private int currentIndex = 0;
@@ -50,18 +52,49 @@ public class DialogUIManager : MonoBehaviour
     public void NextBranch(int branchSelect)
     {
         // Add ReciveDialogueBranch with newBranch being next branch
+	RecieveDialogueBranch(branch.ResponseOption[branchSelect].nextBranch);
+	ActiveDialogue();
+	NextDialogue();
     }
 
     
-    public void RecieveDialogueBranch()
+    public void RecieveDialogueBranch(DialogueBranch newBranch)
     {
         // Add branch info here
+	this.branch = newBranch;
+	responses = Mathf.Clamp(branch.ResponseOption.Count, 0, 3);
+	currentIndex = 0;
     }
 
-    public void NextDialogue()
+    public void NextDialogue() 
     {
-        DeactiveDialogue(); // Remove this and
-       // add next Dialogue mechanism here
+	if (currentIndex >= branch.DialogueLines.Count) //there is still text to show
+	{
+		if (responses == 0) //no responses left
+		{
+			DeactiveDialogue();
+		}
+		else
+		{
+			continueText.SetActive(false);
 
+			for (int i = 0; i < responses; i++)
+			{
+				if (i >= 3)
+				{
+					break;
+				}
+
+				responsesHolder[i].gameObject.SetActive(true);
+				responsesHolder[i].GetComponentInChildren<TextMeshProUGUI>().text = branch.ResponseOption[i].text;
+			}
+		}
+	}
+	else //there is still more text to show
+	{
+		mainText.GetComponent<TextMeshProUGUI>().text = branch.DialogueLines[currentIndex];
+		continueText.SetActive(true);
+		currentIndex++;
+	}
     }
 }
